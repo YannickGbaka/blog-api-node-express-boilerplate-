@@ -1,9 +1,17 @@
 const express = require("express");
 const authRoutes = require("./router/auth");
+const mongoose = require("mongoose");
 
 require("dotenv").config();
 
+mongoose
+  .connect(`${process.env.MONGO_URI}/${process.env.MONGO_DB_NAME}`)
+  .then(() => console.log("DB connected"))
+  .catch((err) => console.log(err));
+
 const app = express();
+
+app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
