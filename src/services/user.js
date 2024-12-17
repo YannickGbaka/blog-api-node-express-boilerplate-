@@ -13,10 +13,14 @@ const register = async (firstName, lastName, email, password) => {
   return savedUser;
 };
 
+const findByEmail = async (email) => {
+  return await User.findOne({ email });
+};
+
 const checkIfExist = async (email) => {
-  const foundUser = await User.findOne({ email });
+  const foundUser = await findByEmail(findByEmail);
   if (!foundUser) return false;
   return true;
 };
 
-module.exports = { register, checkIfExist };
+module.exports = { register, findByEmail, checkIfExist };
