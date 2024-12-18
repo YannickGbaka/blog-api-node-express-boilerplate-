@@ -25,6 +25,5 @@ const categoryValidation = {
       .isLength({ min: 3 })
       .withMessage("The label length should be at least 3 characters"),
   ],
-  // delete: [...],
 };
 module.exports = categoryValidation;

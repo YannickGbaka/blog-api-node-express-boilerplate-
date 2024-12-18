@@ -19,4 +19,7 @@ const update = async (id, updatedData) => {
 
 const findOne = async (id) => await Category.findById(id);
 
-module.exports = { findAll, save, findOne, update };
+const remove = async (id) => {
+  return await Category.findByIdAndDelete(id);
+};
+module.exports = { findAll, save, findOne, update, remove };
