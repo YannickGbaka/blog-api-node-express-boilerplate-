@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 
 const PostCategorySchema = new mongoose.Schema({
@@ -7,6 +8,7 @@ const PostCategorySchema = new mongoose.Schema({
     minLength: 3,
     trim: true,
     unique: true,
+    set: (value) => value.toLowerCase(),
   },
   createdAt: {
     type: Date,
