@@ -8,4 +8,5 @@ const router = Router();
 
 router.get("/", controller.index);
 router.post("/", categoryValidation.create, controller.store);
+router.put("/:id", categoryValidation.update, controller.put);
 module.exports = router;

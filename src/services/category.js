@@ -7,4 +7,16 @@ const save = async ({ label }) => {
   return await category.save();
 };
 
-module.exports = { findAll, save };
+const update = async (id, updatedData) => {
+  const category = await findOne(id);
+  if (!category) {
+    throw new Error("Category not found");
+  }
+
+  category.label = updatedData.label;
+  return await category.save();
+};
+
+const findOne = async (id) => await Category.findById(id);
+
+module.exports = { findAll, save, findOne, update };

@@ -24,4 +24,18 @@ const store = async (request, response) => {
   }
 };
 
-module.exports = { index, store };
+const put = async (request, response) => {
+  try {
+    const result = validationResult(request);
+    const { id } = request.params;
+    if (!result.isEmpty()) return response.status(400).json(result.array());
+    const validatedData = matchedData(request);
+    const updatedData = await service.update(id, validatedData);
+    return response.status(200).json(updatedData);
+  } catch (err) {
+    console.log(err);
+    return response.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { index, store, put };
