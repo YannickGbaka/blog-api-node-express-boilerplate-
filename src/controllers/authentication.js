@@ -11,20 +11,14 @@ const signup = async (request, response, next) => {
       return response.status(400).send({ errors: result.array() });
     }
 
-    const { firstName, lastName, email, password } = request.body;
-
-    const userExists = await userService.checkIfExist(email);
-    if (userExists) {
-      return response
-        .status(400)
-        .json({ message: "Cette adresse email existe déjà" });
-    }
+    const { firstName, lastName, email, password, role } = request.body;
 
     const user = await userService.register(
       firstName,
       lastName,
       email,
-      password
+      password,
+      role
     );
     return response.status(201).json(user);
   } catch (error) {
