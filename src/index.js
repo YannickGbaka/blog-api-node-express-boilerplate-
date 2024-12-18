@@ -1,7 +1,8 @@
 const express = require("express");
 const authRoutes = require("./router/auth");
 const mongoose = require("mongoose");
-
+const passport = require("passport");
+require("./strategies/jwt-strategy");
 require("dotenv").config();
 
 mongoose
@@ -16,5 +17,13 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.use("/api/v1/auth", authRoutes);
+
+app.post(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  function (req, res) {
+    res.status(200).json({ message: "Access granted" });
+  }
+);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
