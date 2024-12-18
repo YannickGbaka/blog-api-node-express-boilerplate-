@@ -1,5 +1,8 @@
 const express = require("express");
+
 const authRoutes = require("./router/auth");
+const categoryRoutes = require("./router/category");
+
 const mongoose = require("mongoose");
 const passport = require("passport");
 require("./strategies/jwt-strategy");
@@ -13,10 +16,12 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use(express.query());
 
 const PORT = process.env.PORT || 3000;
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/categories", categoryRoutes);
 
 app.post(
   "/profile",
