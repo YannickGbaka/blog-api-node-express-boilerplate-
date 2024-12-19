@@ -2,6 +2,7 @@ const express = require("express");
 
 const authRoutes = require("./router/auth");
 const categoryRoutes = require("./router/category");
+const postRoutes = require("./router/post");
 
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRoutes);
+app.use("/api/v1/posts", postRoutes);
 
 app.post(
   "/profile",
