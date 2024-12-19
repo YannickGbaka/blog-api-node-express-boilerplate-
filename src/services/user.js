@@ -18,10 +18,14 @@ const findByEmail = async (email) => {
   return await User.findOne({ email });
 };
 
+const findById = async (id) => {
+  return await User.findById(id);
+};
+
 const checkIfExist = async (email) => {
   const foundUser = await findByEmail(email);
   if (!foundUser) return false;
   return true;
 };
 
-module.exports = { register, findByEmail, checkIfExist };
+module.exports = { register, findByEmail, findById, checkIfExist };

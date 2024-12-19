@@ -1,6 +1,5 @@
 const { body, param } = require("express-validator");
 const { Category } = require("../../mongoose/schemas/category");
-const service = require("../../services/category");
 
 const categoryValidation = {
   create: [
