@@ -17,4 +17,13 @@ const store = async (request, response) => {
   }
 };
 
-module.exports = { store };
+const index = async (request, response) => {
+  try {
+    const posts = await postService.findAll();
+    return response.status(200).json(posts);
+  } catch (err) {
+    console.log(err);
+    return response.status(500).json({ message: "Internal server error" });
+  }
+};
+module.exports = { store, index };

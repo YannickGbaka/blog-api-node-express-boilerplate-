@@ -12,7 +12,7 @@ const PostSchema = new mongoose.Schema({
     required: true,
     minLength: 10,
   },
-  categoryIds: {
+  categories: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Category",
     required: true,
@@ -30,7 +30,7 @@ const PostSchema = new mongoose.Schema({
     },
     set: (tags) => tags.map((tag) => tag.toLowerCase().trim()),
   },
-  authorId: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,

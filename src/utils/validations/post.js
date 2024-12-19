@@ -18,12 +18,12 @@ const PostValidationSchema = {
       errorMessage: "Content must be at least 10 characters",
     },
   },
-  categoryIds: {
+  categories: {
     isArray: true,
-    errorMessage: "CategoryIds must be an array",
+    errorMessage: "categories must be an array",
     isLength: {
       options: { min: 1 },
-      errorMessage: "CategoryIds must have at least one category",
+      errorMessage: "categories must have at least one category",
     },
     custom: {
       options: async (value) => {
@@ -45,9 +45,9 @@ const PostValidationSchema = {
       errorMessage: "Tags must have at least one tag",
     },
   },
-  authorId: {
+  author: {
     isString: true,
-    errorMessage: "AuthorId must be a string",
+    errorMessage: "author must be a string",
     custom: {
       options: async (value) => {
         const user = await userService.findById(value);

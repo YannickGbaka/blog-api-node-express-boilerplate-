@@ -1,8 +1,12 @@
 const { Post } = require("../mongoose/schemas/post");
 
-const save = async ({ title, content, categoryIds, tags, authorId }) => {
-  const post = new Post({ title, content, categoryIds, tags, authorId });
+const save = async ({ title, content, categories, tags, author }) => {
+  const post = new Post({ title, content, categories, tags, author });
   return await post.save();
 };
 
-module.exports = { save };
+const findAll = async () => {
+  return await Post.find().populate(["author", "categories"]);
+};
+
+module.exports = { save, findAll };
