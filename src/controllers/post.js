@@ -1,6 +1,6 @@
 const postService = require("../services/post");
 
-const { matchedData, validationResult } = require("express-validator");
+const { matchedData, validationResult, param } = require("express-validator");
 
 const store = async (request, response) => {
   try {
@@ -19,11 +19,28 @@ const store = async (request, response) => {
 
 const index = async (request, response) => {
   try {
-    const posts = await postService.findAll();
+    const posts = await postService.findAll({
+      withAuthor: true,
+      withCategories: false,
+    });
     return response.status(200).json(posts);
   } catch (err) {
     console.log(err);
     return response.status(500).json({ message: "Internal server error" });
   }
 };
-module.exports = { store, index };
+
+const show = async (request, response) => {
+  try {
+    const { id } = request.params;
+    const post = await postService.findOne(id, {
+      withAuthor: true,
+      withCategories: true,
+    });
+    return response.status(200).json(post);
+  } catch (err) {
+    console.log(err);
+    return response.status(500).json({ message: "Internal server error" });
+  }
+};
+module.exports = { store, index, show };
