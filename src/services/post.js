@@ -16,9 +16,12 @@ const createPopulateOptions = ({
   return populate;
 };
 
-const findAll = async (options = {}) => {
+const findAll = async (options = {}, tags = []) => {
   const populate = createPopulateOptions(options);
-  return await Post.find().populate(["author", "categories"]);
+  const query = tags.length > 0 ? { tags: { $in: tags } } : {};
+  return await Post.find(query).populate(populate);
+  // const query =
+  //   tags.length > 0 ? { tags: { $regex: tags.join("|"), $options: "i" } } : {};
 };
 
 const findOne = async (id, options = {}) => {
