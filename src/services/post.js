@@ -16,12 +16,19 @@ const createPopulateOptions = ({
   return populate;
 };
 
-const findAll = async (options = {}, tags = []) => {
+const findAll = async (options = {}, tags = [], categories = []) => {
   const populate = createPopulateOptions(options);
-  const query = tags.length > 0 ? { tags: { $in: tags } } : {};
+  const query = {};
+
+  if (tags.length > 0) {
+    query.tags = { $in: tags };
+  }
+
+  if (categories.length > 0) {
+    query.categories = { $in: categories };
+  }
+
   return await Post.find(query).populate(populate);
-  // const query =
-  //   tags.length > 0 ? { tags: { $regex: tags.join("|"), $options: "i" } } : {};
 };
 
 const findOne = async (id, options = {}) => {

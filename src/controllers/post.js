@@ -19,14 +19,15 @@ const store = async (request, response) => {
 
 const index = async (request, response) => {
   try {
-    const { tags } = request.query;
+    const { tags, categories } = request.query;
 
     const posts = await postService.findAll(
       {
         withAuthor: true,
         withCategories: false,
       },
-      tags ? JSON.parse(tags) : []
+      tags ? JSON.parse(tags) : [],
+      categories ? JSON.parse(categories) : []
     );
     return response.status(200).json(posts);
   } catch (err) {
