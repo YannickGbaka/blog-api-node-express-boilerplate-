@@ -22,8 +22,16 @@ app.use(express.query());
 const PORT = process.env.PORT || 3000;
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/categories", categoryRoutes);
-app.use("/api/v1/posts", postRoutes);
+app.use(
+  "/api/v1/categories",
+  passport.authenticate("jwt", { session: false }),
+  categoryRoutes
+);
+app.use(
+  "/api/v1/posts",
+  passport.authenticate("jwt", { session: false }),
+  postRoutes
+);
 
 app.post(
   "/profile",
