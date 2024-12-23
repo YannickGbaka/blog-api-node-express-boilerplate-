@@ -8,4 +8,5 @@ const getAllByPost = async (post) => {
   return await Comment.find({ post });
 };
 
-module.exports = { create, getAllByPost };
+const destroy = async (id) => await Comment.findByIdAndDelete(id);
+module.exports = { create, getAllByPost, destroy };

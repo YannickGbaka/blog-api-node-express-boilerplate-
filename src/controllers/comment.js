@@ -27,4 +27,15 @@ const index = async (request, response) => {
   }
 };
 
-module.exports = { store, index };
+const remove = async (request, response) => {
+  try {
+    const { commentId: id, postId } = request.params;
+    const comment = await commentService.destroy(id);
+    return response.status(204).json();
+  } catch (err) {
+    console.log(err);
+    return response.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { store, index, remove };
