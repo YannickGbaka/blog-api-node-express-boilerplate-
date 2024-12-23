@@ -15,4 +15,5 @@ router.post(
   checkSchema(commentValidationSchema),
   commentController.store
 );
+router.get("/:postId/comments", commentController.index);
 module.exports = router;

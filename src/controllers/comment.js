@@ -16,4 +16,15 @@ const store = async (request, response) => {
   }
 };
 
-module.exports = { store };
+const index = async (request, response) => {
+  try {
+    const { postId: post } = request.params;
+    const comments = await commentService.getAllByPost(post);
+    return response.send(comments);
+  } catch (err) {
+    console.log(err);
+    return response.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { store, index };
