@@ -52,11 +52,23 @@ Production mode:
 npm start
 ```
 
+## Test Coverage
+- Authentication (signup/login)
+- Post operations (CRUD)
+- Comment management
+- Category management
+- Protected routes
+- Input validation
+- Error handling
+
 ## API Endpoints
 
 ### Authentication
 - POST `/api/v1/auth/signup` - Register a new user
+  - Required fields: firstName, lastName, email, password, role
 - POST `/api/v1/auth/login` - Login user
+  - Required fields: email, password
+  - Returns: JWT token
 
 ### Posts
 - GET `/api/v1/posts` - List all posts
@@ -66,6 +78,7 @@ npm start
 
 ### Comments
 - POST `/api/v1/posts/:postId/comments` - Add comment to post
+  - Required fields: content, author
 - GET `/api/v1/posts/:postId/comments` - Get post comments
 - DELETE `/api/v1/posts/:postId/comments/:commentId` - Delete comment
 
@@ -75,12 +88,47 @@ npm start
 - PUT `/api/v1/categories/:id` - Update category
 - DELETE `/api/v1/categories/:id` - Delete category
 
+## Testing
+
+The project uses Jest for testing with an in-memory MongoDB instance for test isolation.
+
+Run the test suite:
+```bash
+npm test
+```
+
 ## Technologies Used
 
-- Express.js
-- MongoDB with Mongoose
-- JWT for authentication
-- Passport.js for route protection
-- Express Validator for input validation
-- Bcrypt for password hashing
-- Nodemon for development
+- Express.js - Web framework
+- MongoDB with Mongoose - Database
+- JWT - Authentication
+- Passport.js - Route protection
+- Express Validator - Input validation
+- Bcrypt - Password hashing
+- Jest - Testing framework
+- Supertest - HTTP testing
+- MongoDB Memory Server - Testing database
+- Nodemon - Development server
+
+## Error Handling
+
+The API uses standard HTTP response codes:
+- 200: Success
+- 201: Created
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 500: Internal Server Error
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
+
+## License
+
+ISC
