@@ -36,4 +36,15 @@ const findOne = async (id, options = {}) => {
   return await Post.findById(id).populate(populate);
 };
 
-module.exports = { save, findAll, findOne };
+const updatePostStatus = async (id, status) => {
+  if (!["published", "draft"].includes(status)) {
+    throw new Error("Invalid post status");
+  }
+  return await Post.findByIdAndUpdate(id, { status }, { new: true });
+};
+
+const publishPost = async (id) => updatePostStatus(id, "published");
+
+const draftPost = async (id) => updatePostStatus(id, "draft");
+
+module.exports = { save, findAll, findOne, publishPost, draftPost };
