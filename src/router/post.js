@@ -9,6 +9,8 @@ const router = Router();
 router.post("/", checkSchema(PostValidationSchema), controller.store);
 router.get("/", controller.index);
 router.get("/:id", controller.show);
+router.put("/:id/published", controller.publishPost);
+router.put("/:id/draft", controller.draftPost);
 
 router.post(
   "/:postId/comments",

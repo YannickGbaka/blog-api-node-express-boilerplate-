@@ -21,6 +21,11 @@ const PostSchema = new mongoose.Schema({
       message: "Post must have at least one category",
     },
   },
+  status: {
+    type: String,
+    required: true,
+    default: "draft",
+  },
   tags: {
     type: [String],
     required: true,
