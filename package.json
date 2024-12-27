@@ -21,7 +21,8 @@
     "mongoose": "^8.9.1",
     "nodemon": "^3.1.9",
     "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
