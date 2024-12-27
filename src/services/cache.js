@@ -19,7 +19,19 @@ class CacheService {
   }
 
   generateKey(prefix, indentifier) {
-    return `${prefix}:${identifier}`;
+    return `${prefix}:${indentifier}`;
+  }
+
+  async connect() {
+    if (!this.client.isOpen) {
+      await this.client.connect();
+    }
+  }
+
+  async disconnect() {
+    if (this.client.isOpen) {
+      await this.client.disconnect();
+    }
   }
 }
 
