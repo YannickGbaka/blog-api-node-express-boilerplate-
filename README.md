@@ -60,6 +60,7 @@ npm start
 - Protected routes
 - Input validation
 - Error handling
+- Cache operations
 
 ## API Endpoints
 
@@ -74,7 +75,10 @@ npm start
 - GET `/api/v1/posts` - List all posts
 - GET `/api/v1/posts/:id` - Get single post
 - POST `/api/v1/posts` - Create new post
+  - Required fields: title, content, categories, tags, author
 - GET `/api/v1/posts?tags=[]&categories=[]` - Filter posts
+- PUT `/api/v1/posts/:id/published` - Publish a post
+- PUT `/api/v1/posts/:id/draft` - Move post to draft
 
 ### Comments
 - POST `/api/v1/posts/:postId/comments` - Add comment to post
@@ -85,16 +89,39 @@ npm start
 ### Categories
 - GET `/api/v1/categories` - List categories
 - POST `/api/v1/categories` - Create category
+  - Required fields: label
 - PUT `/api/v1/categories/:id` - Update category
 - DELETE `/api/v1/categories/:id` - Delete category
 
-## Testing
+## Caching Strategy
 
-The project uses Jest for testing with an in-memory MongoDB instance for test isolation.
+The application uses Redis for caching:
+- Post data is cached for 1 hour by default
+- Cache is automatically invalidated on updates
+- Cached data includes:
+  - Individual posts
+  - Post listings
+  - Filtered results
 
-Run the test suite:
-```bash
-npm test
+## Project Structure
+
+```
+blog-expressjs-api/
+├── src/
+│   ├── controllers/     # Route controllers
+│   ├── middleware/      # Custom middleware
+│   ├── mongoose/        # Database models and schemas
+│   ├── router/         # Route definitions
+│   ├── services/       # Business logic
+│   ├── strategies/     # Passport.js strategies
+│   ├── test/          # Test suites
+│   ├── utils/         # Utility functions
+│   ├── index.js       # App configuration
+│   └── server.js      # Server entry point
+├── docker-compose.yml  # Docker services configuration
+├── Dockerfile         # API container configuration
+├── .env               # Environment variables
+└── package.json       # Project dependencies
 ```
 
 ## Technologies Used
@@ -109,6 +136,8 @@ npm test
 - Supertest - HTTP testing
 - MongoDB Memory Server - Testing database
 - Nodemon - Development server
+- Docker - Containerization
+- Docker Compose - Multi-container orchestration
 
 ## Error Handling
 
@@ -132,3 +161,16 @@ The API uses standard HTTP response codes:
 ## License
 
 ISC
+
+## Services
+
+The application runs with the following services:
+
+- **API Server**: Express.js application (Port 3001)
+- **MongoDB**: Database (Port 27017)
+- **Redis**: Caching layer (Port 6379)
+- **Mongo Express**: Database management UI (Port 8081)
+
+## Running the Application
+
+### Docker Environment
