@@ -21,6 +21,79 @@ A RESTful API built with Express.js for managing a blog platform with authentica
 
 ## Installation
 
+### Using Docker (Recommended)
+
+1. Clone the repository
+```bash
+git clone [repository-url]
+cd blog-expressjs-api
+```
+
+2. Create a `.env` file (optional, default values are provided in docker-compose.yml)
+```bash
+PORT=3001
+MONGO_URI=mongodb://mongodb:27017
+MONGO_DB_NAME=blog
+JWT_SECRET=your_jwt_secret
+```
+
+3. Build and start the containers
+```bash
+# Build and start all services in detached mode
+docker-compose up -d
+
+# View the logs
+docker-compose logs -f web
+```
+
+4. Verify the installation
+- API Server: http://localhost:3001
+- MongoDB Express UI: http://localhost:8081
+
+### Managing Docker Containers
+
+```bash
+# Stop all services
+docker-compose down
+
+# Rebuild and restart services
+docker-compose up -d --build
+
+# View logs of specific service
+docker-compose logs -f [service-name]  # web, mongodb, redis, or mongo-express
+
+# Reset data (removes volumes)
+docker-compose down -v
+```
+
+### Troubleshooting Docker Setup
+
+1. If ports are already in use:
+```bash
+# Check which process is using the port
+lsof -i :3001
+# or
+netstat -ano | grep 3001
+
+# Kill the process
+kill -9 <PID>
+```
+
+2. If MongoDB fails to start:
+```bash
+# Remove existing volume
+docker-compose down -v
+# Restart services
+docker-compose up -d
+```
+
+3. Check service status:
+```bash
+docker-compose ps
+```
+
+### Local Development Setup
+
 1. Clone the repository
 ```bash
 git clone [repository-url]
