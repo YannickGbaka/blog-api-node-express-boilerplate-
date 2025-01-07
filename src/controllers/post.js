@@ -1,5 +1,7 @@
 const { response } = require("express");
 const postService = require("../services/post");
+const aiService = require("../services/ai");
+const { findOne: findOneCategory } = require("../services/category");
 
 const { matchedData, validationResult, param } = require("express-validator");
 
@@ -73,4 +75,34 @@ const draftPost = async (request, response) => {
   }
 };
 
-module.exports = { store, index, show, publishPost, draftPost };
+const generatePost = async (request, response) => {
+  try {
+    const { category } = request.body;
+    const categorieModel = await findOneCategory(category);
+    const prompt = `As an expert content creator, write a comprehensive blog post about ${categorieModel.label}. 
+    
+    Create engaging, well-researched content that provides value to readers. The article should include:
+    - A compelling and SEO-friendly title
+    - Clear structure with introduction, main points, and conclusion
+    - Relevant examples and explanations
+    - Professional tone of voice
+
+    Return ONLY a valid JSON object without quote with this exact schema:
+    {
+      "title": "string (50-60 characters for SEO)",
+      "content": "string (800-1200 words, with proper markdown formatting)",
+      "categories": ["${categorieModel.id}"],
+      "tags": ["string array of 3-5 relevant keywords"]
+    }`;
+
+    const data = await aiService.generateResponse(prompt);
+    return response.status(201).json(JSON.parse(data));
+  } catch (err) {
+    console.log(err);
+    return response.status(500).json({ message: "Internal server error " });
+  }
+};
+
+module.exports = { store, index, show, publishPost, draftPost, generatePost };
+
+// 6762e17746d93490d6328599

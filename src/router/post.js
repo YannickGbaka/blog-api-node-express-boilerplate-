@@ -11,6 +11,7 @@ router.get("/", controller.index);
 router.get("/:id", controller.show);
 router.put("/:id/published", controller.publishPost);
 router.put("/:id/draft", controller.draftPost);
+router.post("/generate", controller.generatePost);
 
 router.post(
   "/:postId/comments",
