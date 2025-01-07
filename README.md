@@ -10,8 +10,12 @@ A RESTful API built with Express.js for managing a blog platform with authentica
 - Category management
 - Role-based access (admin, author, reader)
 - MongoDB integration with Mongoose
+- Redis caching for improved performance
+- AI-powered content generation
 - Input validation
 - Protected routes with Passport.js
+- Comprehensive test suite
+- Docker containerization
 
 ## Prerequisites
 
@@ -152,29 +156,41 @@ npm start
 - GET `/api/v1/posts?tags=[]&categories=[]` - Filter posts
 - PUT `/api/v1/posts/:id/published` - Publish a post
 - PUT `/api/v1/posts/:id/draft` - Move post to draft
+- POST `/api/v1/posts/generate` - Generate AI content
+  - Required field: category
 
 ### Comments
-- POST `/api/v1/posts/:postId/comments` - Add comment to post
+- POST `/api/v1/posts/:postId/comments` - Add comment
   - Required fields: content, author
-- GET `/api/v1/posts/:postId/comments` - Get post comments
+- GET `/api/v1/posts/:postId/comments` - Get comments
 - DELETE `/api/v1/posts/:postId/comments/:commentId` - Delete comment
 
 ### Categories
 - GET `/api/v1/categories` - List categories
 - POST `/api/v1/categories` - Create category
-  - Required fields: label
+  - Required field: label
 - PUT `/api/v1/categories/:id` - Update category
 - DELETE `/api/v1/categories/:id` - Delete category
 
 ## Caching Strategy
 
-The application uses Redis for caching:
-- Post data is cached for 1 hour by default
-- Cache is automatically invalidated on updates
+Redis caching implementation:
+- Post data cached for 1 hour by default
+- Automatic cache invalidation on updates
 - Cached data includes:
   - Individual posts
   - Post listings
   - Filtered results
+- Cache keys format: `{prefix}:{identifier}`
+
+## AI Content Generation
+
+The API includes AI-powered content generation:
+- Generates blog posts based on categories
+- Creates SEO-friendly titles
+- Includes relevant tags
+- Structures content with proper formatting
+- Returns JSON-formatted content ready for posting
 
 ## Project Structure
 
@@ -201,6 +217,7 @@ blog-expressjs-api/
 
 - Express.js - Web framework
 - MongoDB with Mongoose - Database
+- Redis - Caching layer
 - JWT - Authentication
 - Passport.js - Route protection
 - Express Validator - Input validation
@@ -208,7 +225,7 @@ blog-expressjs-api/
 - Jest - Testing framework
 - Supertest - HTTP testing
 - MongoDB Memory Server - Testing database
-- Nodemon - Development server
+- Ollama - AI content generation
 - Docker - Containerization
 - Docker Compose - Multi-container orchestration
 
